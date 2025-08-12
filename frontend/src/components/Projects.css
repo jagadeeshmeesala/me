@@ -1,0 +1,154 @@
+.projects {
+  padding: 4rem 2rem;
+}
+
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.project-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-color: #ccc;
+}
+
+.project-image {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.project-emoji {
+  font-size: 4rem;
+  display: block;
+}
+
+.project-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-title {
+  color: #000;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+}
+
+.project-description {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.project-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-tag {
+  background: #f5f5f5;
+  color: #333;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
+  font-family: 'Inter', sans-serif;
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.project-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+
+.project-link.github {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.project-link.github:hover {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  transform: translateY(-2px);
+}
+
+.project-link.live {
+  background: #000;
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.project-link.live:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .projects {
+    padding: 2rem 1rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .project-card {
+    padding: 1.5rem;
+  }
+  
+  .project-emoji {
+    font-size: 3rem;
+  }
+  
+  .project-links {
+    flex-direction: column;
+  }
+  
+  .project-link {
+    justify-content: center;
+  }
+}

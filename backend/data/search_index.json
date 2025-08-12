@@ -1,0 +1,100 @@
+[
+  {
+    "id": "1",
+    "title": "React Development Best Practices",
+    "content": "React is a powerful JavaScript library for building user interfaces. Key best practices include component composition, proper state management, and performance optimization techniques.",
+    "score": 0.0,
+    "tags": [
+      "react",
+      "frontend",
+      "javascript",
+      "ui"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "FastAPI Backend Development",
+    "content": "FastAPI is a modern Python web framework for building APIs. It offers automatic API documentation, type checking, and high performance with async support.",
+    "score": 0.0,
+    "tags": [
+      "fastapi",
+      "python",
+      "backend",
+      "api"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Machine Learning Fundamentals",
+    "content": "Machine learning involves training algorithms to make predictions or decisions based on data. Key concepts include supervised learning, unsupervised learning, and neural networks.",
+    "score": 0.0,
+    "tags": [
+      "machine learning",
+      "ai",
+      "python",
+      "data science"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Cloud Deployment Strategies",
+    "content": "Cloud deployment involves hosting applications on cloud platforms like AWS, Azure, or Google Cloud. Strategies include containerization, serverless, and microservices architecture.",
+    "score": 0.0,
+    "tags": [
+      "cloud",
+      "deployment",
+      "aws",
+      "azure",
+      "docker"
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Web Development Architecture",
+    "content": "Modern web development involves frontend frameworks, backend APIs, databases, and deployment strategies. Understanding the full stack is crucial for building scalable applications.",
+    "score": 0.0,
+    "tags": [
+      "web development",
+      "full stack",
+      "architecture",
+      "scalability"
+    ]
+  },
+  {
+    "id": "6",
+    "title": "API Design Principles",
+    "content": "Good API design follows REST principles, includes proper error handling, versioning, and documentation. Security and performance are also key considerations.",
+    "score": 0.0,
+    "tags": [
+      "api",
+      "rest",
+      "design",
+      "documentation"
+    ]
+  },
+  {
+    "id": "7",
+    "title": "Database Optimization",
+    "content": "Database optimization involves indexing, query optimization, and proper schema design. Performance monitoring and caching strategies are also important.",
+    "score": 0.0,
+    "tags": [
+      "database",
+      "optimization",
+      "sql",
+      "performance"
+    ]
+  },
+  {
+    "id": "8",
+    "title": "Frontend Framework Comparison",
+    "content": "Popular frontend frameworks include React, Vue, and Angular. Each has its strengths: React for flexibility, Vue for simplicity, and Angular for enterprise applications.",
+    "score": 0.0,
+    "tags": [
+      "frontend",
+      "react",
+      "vue",
+      "angular",
+      "frameworks"
+    ]
+  }
+]
