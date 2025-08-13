@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import search, contact
+from app.api.routes import search, contact, analytics
 from app.core.config import settings
 
 app = FastAPI(
@@ -21,6 +21,7 @@ app.add_middleware(
 # Include API routes
 app.include_router(search.router, prefix="/api", tags=["search"])
 app.include_router(contact.router, prefix="/api", tags=["contact"])
+app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 
 @app.get("/")
 async def root():

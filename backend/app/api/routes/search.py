@@ -1,74 +1,72 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional
-from app.services.search_service import SearchService
-import logging
+from typing import List, Dict, Any
+from app.services.rag_service import RAGService
+import os
 
 router = APIRouter()
-search_service = SearchService()
+rag_service = RAGService()
 
 class SearchRequest(BaseModel):
     query: str
+    max_results: int = 5
 
 class SearchResult(BaseModel):
-    id: str
-    title: str
-    content: str
-    score: float
-    url: Optional[str] = None
-
-class SearchResponse(BaseModel):
-    results: List[SearchResult]
-    total_results: int
+    answer: str
+    sources: List[Dict[str, Any]]
+    confidence: float
     query: str
 
-@router.post("/search", response_model=SearchResponse)
+@router.post("/search", response_model=SearchResult)
 async def search(request: SearchRequest):
     """
-    Perform AI-powered search on the knowledge base
+    Enhanced AI search using RAG (Retrieval-Augmented Generation)
     """
     try:
-        if not request.query.strip():
-            raise HTTPException(status_code=400, detail="Query cannot be empty")
+        # Check if OpenAI API key is configured
+        if not os.getenv("OPENAI_API_KEY"):
+            # Fallback to simple search if OpenAI is not configured
+            return SearchResult(
+                answer="AI search is not configured. Please contact the administrator.",
+                sources=[],
+                confidence=0.0,
+                query=request.query
+            )
         
-        # Perform search using the search service
-        results = await search_service.search(request.query.strip())
+        # Use RAG service for intelligent search
+        result = rag_service.search_and_generate(
+            query=request.query,
+            max_results=request.max_results
+        )
         
-        return SearchResponse(
-            results=results,
-            total_results=len(results),
+        return SearchResult(
+            answer=result["answer"],
+            sources=result["sources"],
+            confidence=result["confidence"],
             query=request.query
         )
         
     except Exception as e:
-        logging.error(f"Search error: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error during search")
+        raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
 
-@router.get("/search/suggestions")
-async def get_search_suggestions(q: str):
+@router.post("/initialize-rag")
+async def initialize_rag():
     """
-    Get search suggestions based on partial query
+    Initialize the RAG system with sample data
     """
     try:
-        if not q.strip():
-            return {"suggestions": []}
-        
-        suggestions = await search_service.get_suggestions(q.strip())
-        return {"suggestions": suggestions}
-        
+        rag_service.initialize_sample_data()
+        return {"message": "RAG system initialized successfully"}
     except Exception as e:
-        logging.error(f"Search suggestions error: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
+        raise HTTPException(status_code=500, detail=f"RAG initialization failed: {str(e)}")
 
-@router.get("/search/popular")
-async def get_popular_searches():
+@router.post("/add-document")
+async def add_document(content: str, metadata: Dict[str, Any]):
     """
-    Get popular search terms
+    Add a new document to the RAG system
     """
     try:
-        popular_searches = await search_service.get_popular_searches()
-        return {"popular_searches": popular_searches}
-        
+        doc_id = rag_service.add_document(content, metadata)
+        return {"message": "Document added successfully", "doc_id": doc_id}
     except Exception as e:
-        logging.error(f"Popular searches error: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
+        raise HTTPException(status_code=500, detail=f"Failed to add document: {str(e)}")

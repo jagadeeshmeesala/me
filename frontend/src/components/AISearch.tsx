@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
+import { buildApiUrl } from '../config';
 import './AISearch.css';
 
 interface SearchResult {
-  id: string;
-  title: string;
-  content: string;
-  score: number;
+  answer: string;
+  sources: Array<{
+    title: string;
+    category: string;
+    url?: string;
+  }>;
+  confidence: number;
+  query: string;
 }
 
 const AISearch: React.FC = () => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [result, setResult] = useState<SearchResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -20,23 +25,23 @@ const AISearch: React.FC = () => {
 
     setLoading(true);
     setError('');
-    setResults([]);
+    setResult(null);
 
     try {
-      const response = await fetch('/api/search', {
+      const response = await fetch(buildApiUrl('/api/search'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: query.trim() }),
+        body: JSON.stringify({ query: query.trim(), max_results: 5 }),
       });
 
       if (!response.ok) {
-        throw new Error('Search request failed');
+        throw new Error('Search failed');
       }
 
-      const data = await response.json();
-      setResults(data.results || []);
+      const data: SearchResult = await response.json();
+      setResult(data);
     } catch (err) {
       setError('Failed to perform search. Please try again.');
       console.error('Search error:', err);
@@ -45,69 +50,125 @@ const AISearch: React.FC = () => {
     }
   };
 
+  const getConfidenceColor = (confidence: number) => {
+    if (confidence >= 0.8) return '#4CAF50'; // Green
+    if (confidence >= 0.6) return '#FF9800'; // Orange
+    return '#F44336'; // Red
+  };
+
+  const getConfidenceText = (confidence: number) => {
+    if (confidence >= 0.8) return 'High Confidence';
+    if (confidence >= 0.6) return 'Medium Confidence';
+    return 'Low Confidence';
+  };
+
   return (
-    <section className="ai-search section">
-      <div className="search-container">
-        <h2 className="section-title">AI-Powered Search</h2>
-        <p className="section-subtitle">
-          Search through my knowledge base using advanced AI algorithms
-        </p>
+    <div className="ai-search">
+      <h2>AI-Powered Search</h2>
+      <p className="search-description">
+        Ask me anything about my skills, experience, projects, or background. 
+        I'll provide intelligent, contextual answers based on my knowledge base.
+      </p>
+      
+      <form onSubmit={handleSearch} className="search-form">
+        <div className="search-input-container">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="e.g., What are your technical skills? Tell me about your projects..."
+            className="search-input"
+            disabled={loading}
+          />
+          <button type="submit" className="search-button" disabled={loading}>
+            {loading ? 'Searching...' : 'Search'}
+          </button>
+        </div>
+      </form>
 
-        <form onSubmit={handleSearch} className="search-form">
-          <div className="search-input-group">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ask me anything..."
-              className="search-input"
-              disabled={loading}
-            />
-            <button type="submit" className="search-btn" disabled={loading}>
-              {loading ? (
-                <i className="fas fa-spinner fa-spin"></i>
-              ) : (
-                <i className="fas fa-search"></i>
-              )}
-            </button>
-          </div>
-        </form>
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
 
-        {error && (
-          <div className="error-message">
-            <i className="fas fa-exclamation-triangle"></i>
-            {error}
-          </div>
-        )}
-
-        {results.length > 0 && (
-          <div className="search-results">
-            <h3>Search Results ({results.length})</h3>
-            <div className="results-list">
-              {results.map((result) => (
-                <div key={result.id} className="result-card">
-                  <h4 className="result-title">{result.title}</h4>
-                  <p className="result-content">{result.content}</p>
-                  <div className="result-meta">
-                    <span className="result-score">
-                      Relevance: {Math.round(result.score * 100)}%
-                    </span>
-                  </div>
-                </div>
-              ))}
+      {result && (
+        <div className="search-results">
+          <div className="result-header">
+            <h3>Answer</h3>
+            <div className="confidence-indicator">
+              <span 
+                className="confidence-dot" 
+                style={{ backgroundColor: getConfidenceColor(result.confidence) }}
+              ></span>
+              <span className="confidence-text">
+                {getConfidenceText(result.confidence)} ({Math.round(result.confidence * 100)}%)
+              </span>
             </div>
           </div>
-        )}
-
-        {!loading && !error && results.length === 0 && query && (
-          <div className="no-results">
-            <i className="fas fa-search"></i>
-            <p>No results found for "{query}"</p>
-            <p>Try different keywords or rephrase your query.</p>
+          
+          <div className="answer-content">
+            {result.answer}
           </div>
-        )}
+
+          {result.sources && result.sources.length > 0 && (
+            <div className="sources-section">
+              <h4>Sources:</h4>
+              <div className="sources-list">
+                {result.sources.map((source, index) => (
+                  <div key={index} className="source-item">
+                    <span className="source-title">{source.title}</span>
+                    {source.category && (
+                      <span className="source-category">({source.category})</span>
+                    )}
+                    {source.url && (
+                      <a 
+                        href={source.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="source-link"
+                      >
+                        View Source
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="search-examples">
+        <h4>Example Questions:</h4>
+        <div className="example-queries">
+          <button 
+            onClick={() => setQuery("What are your technical skills?")}
+            className="example-query"
+          >
+            What are your technical skills?
+          </button>
+          <button 
+            onClick={() => setQuery("Tell me about your projects")}
+            className="example-query"
+          >
+            Tell me about your projects
+          </button>
+          <button 
+            onClick={() => setQuery("What's your experience with cloud computing?")}
+            className="example-query"
+          >
+            What's your experience with cloud computing?
+          </button>
+          <button 
+            onClick={() => setQuery("How can I contact you?")}
+            className="example-query"
+          >
+            How can I contact you?
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

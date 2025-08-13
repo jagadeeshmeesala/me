@@ -5,6 +5,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import AISearch from './components/AISearch';
+import VisitorCounter from './components/VisitorCounter';
 import './App.css';
 
 const App: React.FC = () => {
@@ -33,6 +34,12 @@ const App: React.FC = () => {
       <main className="main-content">
         {renderSection()}
       </main>
+      <footer className="footer">
+        <VisitorCounter />
+        <div className="footer-text">
+          <p>&copy; 2024 Jagadeesh Meesala. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };
