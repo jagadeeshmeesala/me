@@ -1,4 +1,5 @@
 import React from 'react';
+import HeaderVisitorCounter from './HeaderVisitorCounter';
 import './Header.css';
 
 interface HeaderProps {
@@ -18,6 +19,11 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
   return (
     <header className="header">
       <div className="container">
+        {/* Visitor Counter Banner */}
+        <div className="visitor-banner">
+          <HeaderVisitorCounter />
+        </div>
+        
         <div className="header-content">
           <div className="logo">
             <h2>Jagadeesh Meesala</h2>

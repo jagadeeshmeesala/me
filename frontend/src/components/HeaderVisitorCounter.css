@@ -1,0 +1,130 @@
+.header-visitor-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 500px;
+  font-family: 'Inter', sans-serif;
+}
+
+.header-visitor-counter .counter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.header-visitor-counter .counter-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.header-visitor-counter .counter-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.header-visitor-counter .counter-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.header-visitor-counter .counter-number {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #000;
+  line-height: 1;
+}
+
+.header-visitor-counter .counter-label {
+  font-size: 0.65rem;
+  color: #6c757d;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.header-visitor-counter .counter-item.today {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: #000;
+}
+
+.header-visitor-counter .counter-item.today .counter-number {
+  color: #000;
+}
+
+.header-visitor-counter .counter-item.today .counter-label {
+  color: #495057;
+}
+
+.header-visitor-counter.loading,
+.header-visitor-counter.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+}
+
+.header-visitor-counter .counter-text {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .header-visitor-counter {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .header-visitor-counter .counter-item {
+    padding: 0.25rem 0.6rem;
+    min-width: 120px;
+    justify-content: center;
+  }
+  
+  .header-visitor-counter .counter-number {
+    font-size: 0.8rem;
+  }
+  
+  .header-visitor-counter .counter-label {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-visitor-counter {
+    gap: 0.3rem;
+  }
+  
+  .header-visitor-counter .counter-item {
+    padding: 0.2rem 0.5rem;
+    min-width: 100px;
+  }
+  
+  .header-visitor-counter .counter-icon {
+    font-size: 0.9rem;
+  }
+  
+  .header-visitor-counter .counter-number {
+    font-size: 0.75rem;
+  }
+  
+  .header-visitor-counter .counter-label {
+    font-size: 0.55rem;
+  }
+}
+

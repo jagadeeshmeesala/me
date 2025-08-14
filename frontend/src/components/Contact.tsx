@@ -71,7 +71,7 @@ const Contact: React.FC = () => {
                 <i className="fas fa-envelope"></i>
                 <div>
                   <h4>Email</h4>
-                  <p>your.email@example.com</p>
+                  <p>jagadeesh.hya@gmail.com</p>
                 </div>
               </div>
               
@@ -79,7 +79,7 @@ const Contact: React.FC = () => {
                 <i className="fas fa-phone"></i>
                 <div>
                   <h4>Phone</h4>
-                  <p>+1 (555) 123-4567</p>
+                  <p>+1 (443) 518-8520</p>
                 </div>
               </div>
               
@@ -87,7 +87,7 @@ const Contact: React.FC = () => {
                 <i className="fas fa-map-marker-alt"></i>
                 <div>
                   <h4>Location</h4>
-                  <p>San Francisco, CA</p>
+                  <p>Baltimore, MD</p>
                 </div>
               </div>
             </div>
@@ -95,15 +95,15 @@ const Contact: React.FC = () => {
             <div className="card">
               <h3>Connect With Me</h3>
               <div className="social-links">
-                <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://linkedin.com/in/jagadeeshmeesala" target="_blank" rel="noopener noreferrer" className="social-link">
                   <i className="fab fa-linkedin"></i>
                   LinkedIn
                 </a>
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://github.com/jagadeeshmeesala" target="_blank" rel="noopener noreferrer" className="social-link">
                   <i className="fab fa-github"></i>
                   GitHub
                 </a>
-                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://twitter.com/jagadeeshmeesala" target="_blank" rel="noopener noreferrer" className="social-link">
                   <i className="fab fa-twitter"></i>
                   Twitter
                 </a>
